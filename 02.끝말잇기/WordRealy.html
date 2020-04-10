@@ -11,20 +11,28 @@
 
 <body>
   <div id="root">
-    <div>{{word}}</div>
-    <form v-on:submit="onSubmitForm">
-      <input type="text" ref="answer" v-model="value">
-      <button type="submit">입력!</button>
-    </form>
-    <div>{{result}}</div>
+    <word-relay></word-relay>
+    <word-relay></word-relay>
+    <word-relay></word-relay>
   </div>
   <script>
-    const app = new Vue({
-      el: '#root',
-      data: {
-        word: '에린',
-        value: '',
-        result: '',
+    Vue.component(`word-relay`, { //전역 컴포넌트
+      template: `
+        <div>
+          <div>{{word}}</div>
+            <form v-on:submit="onSubmitForm">
+              <input type="text" ref="answer" v-model="value">
+              <button type="submit">입력!</button>
+            </form>
+          <div>{{result}}</div>
+        </div>
+      `,
+      data() { // 컴포넌트로 변경하면서 필요한 참조 관계를 충족시키기 위함.
+        return {
+          word: '에린',
+          value: '',
+          result: '',
+        }
       },
       methods: {
         onSubmitForm(e) {
@@ -41,6 +49,11 @@
           }
         }
       }
+    })
+  </script>
+  <script>
+    const app = new Vue({ //Vue 인스턴스
+      el: '#root'
     })
   </script>
 </body>
